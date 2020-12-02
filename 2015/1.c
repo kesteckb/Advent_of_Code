@@ -8,7 +8,6 @@ int main(void)
     int floor = 0;
     int position;
 
-
     fptr = fopen("input1.txt", "r");
 
     if (fptr == NULL)
