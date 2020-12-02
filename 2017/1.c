@@ -20,6 +20,7 @@ What is the solution to your new captcha? */
 #include <stdlib.h>
 
 int find_match(int arr[], int count);
+int part_2(int arr[], int count);
 
 int main(void)
 {
@@ -27,7 +28,7 @@ int main(void)
     int value;
     int count = 0;
     int arr[2500];
-    int sum;
+    int sum, new_sum;
 
     fptr = fopen("input1.txt", "r");
     if (fptr == NULL)
@@ -45,10 +46,35 @@ int main(void)
         printf("\n");
     }
     sum = find_match(arr, count);
+    new_sum = part_2(arr, count);
 
-    printf("sum: %d\n", sum);
+    printf("Part 1: %d\n", sum);
+    printf("Part 2: %d\n", new_sum);
 
     return 0;
+}
+
+int part_2(int arr[], int count)
+{
+    int half = count / 2;
+    int i;
+    int sum = 0;
+
+    for (i = 0; i < half; i++)
+    {
+        if (arr[i] == arr[half + i])
+        {
+            sum += arr[i];
+        }
+    }
+    for (i = half; i < count; i++)
+    {
+        if (arr[i] == arr[i - half])
+        {
+            sum += arr[i];
+        }
+    }
+    return sum;
 }
 
 int find_match(int arr[], int count)

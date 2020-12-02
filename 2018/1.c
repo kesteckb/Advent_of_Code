@@ -52,9 +52,111 @@ Here are other examples:
 What is the first frequency your device reaches twice? */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define ARR_SIZE 1000
+#define MAX_PATH 15
+#define HIST_LEN 150000
+
+void sum_freq_changes(int value, int *sum);
+int repeated(int change_arr[], int count);
 
 int main(void)
 {
+    FILE *fptr;
+    int sum = 0;
+    int count = 0;
+    int value, len, i, first_repeated;
+    char *num_str;
+    char buffer[MAX_PATH];
+    int change_arr[ARR_SIZE];
 
+    fptr = fopen("input1.txt", "r");
+    if (fptr == NULL)
+    {
+        fprintf(stderr, "File does not exist\n");
+        exit(EXIT_FAILURE);
+    }
+
+    while (!feof(fptr))
+    {
+        /* store each line in string: buffer */
+        if (!fgets(buffer, MAX_PATH, fptr))
+        {
+            break;
+        }
+
+        /* get the length of the string, and malloc space for a 
+           string to hold the number without the sign */
+        len = strlen(buffer);
+        num_str = (char*) malloc((len + 1)* sizeof(char));
+
+        /* Move the numerals from the line in file to a temporary
+           string called num_str, and end it with a '\0' value */
+        for (i = 1; i < len; i++)
+        {
+            num_str[i - 1] = buffer[i];
+        }
+        num_str[len] = '\0';
+        /* convert from string to integer */
+        value = atoi(num_str);
+
+        free(num_str);
+
+        if (buffer[0] == '-')
+        {
+            value *= -1;
+        }
+        change_arr[count] = value;
+        count++;
+        sum_freq_changes(value, &sum);
+    }
+    
+
+    first_repeated = repeated(change_arr, count);
+    
+    printf("Part 1: %d\nPart 2: %d\n", sum, first_repeated);
+
+    fclose(fptr);
+    return 0;
+}
+
+void sum_freq_changes(int value, int *sum)
+{
+    (*sum) += value;
+}
+
+/* This is a terribly innefficient way to do this :(
+   It took 132,085 frequency changes to have a frequency
+   repeat */
+int repeated(int change_arr[], int count)
+{
+    int i = 0;
+    int j;
+    int length = 0;
+    int frequency = 0;
+    int history[HIST_LEN];
+    do 
+    {
+        if ((i == count))
+        {
+            i = 0;
+        }
+        frequency += change_arr[i];
+        history[length] = frequency;
+        if (length > 0)
+        {
+            for (j = 0; j < length; j++)
+            {
+                if (history[j] == frequency)
+                {
+                    return frequency;
+                }
+            }
+        }
+        i++;
+        length++;
+    } while (length < HIST_LEN);
     return 0;
 }
