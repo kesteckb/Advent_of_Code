@@ -27,7 +27,7 @@ How many passwords are valid according to their policies? */
 
 typedef enum bool {false,true} bool;
 
-void valid(int min, int max, char letter, char pw[], int *valid_pws);
+void valid(int min, int max, char letter, char pw[], int *valid_1, int *valid_2);
 
 int main(void)
 {
@@ -36,7 +36,8 @@ int main(void)
     char buffer[MAX_PATH];
     int min;
     int max;
-    int valid_pws = 0;
+    int valid_1 = 0;
+    int valid_2 = 0;
 
     /* File Handling */
     fptr = fopen("input2.txt", "r");
@@ -52,18 +53,17 @@ int main(void)
         {
             fscanf(fptr, "%d-%d %c: ", &min, &max, &letter);
             fgets(buffer, MAX_PATH, fptr);
-            valid(min, max, letter, buffer, &valid_pws);
+            valid(min, max, letter, buffer, &valid_1, &valid_2);
         }
     }
 
-    printf("%d\n", valid_pws);
+    printf("Valid Passwords\nPart 1: %d\nPart 2: %d\n", valid_1, valid_2);
 
     fclose(fptr);
     return 0;
 }
 
-
-void valid(int min, int max, char letter, char pw[], int *valid_pws)
+void valid(int min, int max, char letter, char pw[], int *valid_1, int *valid_2)
 {
     int count = 0;
     int i = 0;
@@ -78,13 +78,17 @@ void valid(int min, int max, char letter, char pw[], int *valid_pws)
     }
     
     /* Part 1: for pw to be valid, there must be between 'min' and 
-       'max' occurances of 'letter' in 'pw[]'
+       'max' occurances of 'letter' in 'pw[]' */
+    if ((count >= min) && (count <= max))
+    {
+        (*valid_1)++;
+    }
 
     /* Part 2: min is pos 1, max is pos 2. One and only one of them
        must be the magic letter for the password to be valid */
     if (((pw[min - 1] == letter) && (pw[min - 1] != pw[max - 1])) || 
         ((pw[max - 1] == letter) && (pw[min - 1] != pw[max - 1])))
     {
-        (*valid_pws)++;
+        (*valid_2)++;
     }
 }
