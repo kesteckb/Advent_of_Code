@@ -7,12 +7,14 @@ with open("input4.txt", 'r') as file:
 
 # --- Part 1 ---
 def part_1(data) -> int:
-    good_pw = 0
+    return len([password for password in data if is_valid(password)])
+    
+    # good_pw = 0
 
-    for password in data:
-        if is_valid(password) == True:
-            good_pw += 1
-    return good_pw
+    # for password in data:
+    #     if is_valid(password):
+    #         good_pw += 1
+    # return good_pw
 
 # --- Part 2 ---
 def part_2(data) -> int:
