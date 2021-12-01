@@ -44,3 +44,6 @@ assert is_valid(['aa', 'bb', 'cc', 'dd', 'aaa']) == True
 # Answer
 print(f"Part 1: {part_1(data)}")
 print(f"Part 2: {part_2(data)}")
+
+# Close file
+file.close()

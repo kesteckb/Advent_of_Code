@@ -99,3 +99,6 @@ assert part_2("^v^v^v^v^v") == 11
 # Answer
 print(f"Part 1: {part_1(input)}")
 print(f"Part 2: {part_2(input)}")
+
+# Close file
+file.close()

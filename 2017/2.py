@@ -36,7 +36,6 @@ def part_2(data) -> int:
                         sum += (set[end - idx2]) / set[idx]
     return sum
 
-
 # Test Part 1
 test_data = [
     [5,1,9,5],

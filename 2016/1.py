@@ -58,10 +58,83 @@ def part_1(instructions) -> int:
 
     return abs(x) + abs(y)
 
+# --- Part 2 ---
+def part_2(instructions) -> int:
+    visited = ([0, 0])
+    x = 0
+    y = 0
+    path = Directions.North
+
+    for instruction in instructions:
+        # Handle direction
+        if instruction[0] == "R":
+            if path == Directions.West:
+                path = Directions.North
+            elif path == Directions.North:
+                path = Directions.East
+            elif path == Directions.East:
+                path = Directions.South 
+            elif path == Directions.South:
+                path = Directions.West        
+        elif instruction[0] == "L":
+            if path == Directions.West:
+                path = Directions.South
+            elif path == Directions.North:
+                path = Directions.West
+            elif path == Directions.East:
+                path = Directions.North 
+            elif path == Directions.South:
+                path = Directions.East        
+        else:
+            raise RuntimeError(f"Got unexpected token")
+
+        # Handle Distance
+        distance = int(instruction[1:])
+        if path == Directions.North:
+            for idx in range(distance):
+                y += 1
+                if [x, y] in visited:
+                    return abs(x) + abs(y)
+                else:
+                    visited.append([x, y])
+        elif path == Directions.South:
+            for idx in range(distance):
+                y -= 1
+                if [x, y] in visited:
+                    return abs(x) + abs(y)
+                else:
+                    visited.append([x, y])            
+        elif path == Directions.East:
+            for idx in range(distance):
+                x += 1
+                if [x, y] in visited:
+                    return abs(x) + abs(y)
+                else:
+                    visited.append([x, y])            
+        elif path == Directions.West:
+            for idx in range(distance):
+                x -= 1
+                if [x, y] in visited:
+                    return abs(x) + abs(y)
+                else:
+                    visited.append([x, y])            
+        else:
+            raise RuntimeError(f"Got unexpected token")
+
+
+    return distance
+
 # --- Test Part 1 ---
 assert part_1(['R2', 'L3']) == 5
 assert part_1(['R2', 'R2', 'R2']) == 2
 assert part_1(['R5', 'L5', 'R5', 'R3']) == 12
 
+# --- Test Part 2 ---
+assert part_2(['R8', 'R4', 'R4', 'R8']) == 4
+
 # Answer
 print(f"Part 1: {part_1(instructions)}")
+print(f"Part 2: {part_2(instructions)}")
+
+# Close file
+file.close()
