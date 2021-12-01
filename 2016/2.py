@@ -138,6 +138,3 @@ assert part_2(example) == "5DB3"
 # --- Answer ---
 print(f"Part 1: {part_1(lines)}")
 print(f"Part 2: {part_2(lines)}")
-
-# Close file
-file.close()
