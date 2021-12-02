@@ -62,6 +62,3 @@ def part_2(newList) -> int:
 # Answer
 print(f"Part 1: {part_1(newList)}")
 print(f"Part 2: {part_2(newList)}")
-
-# Close file
-file.close()

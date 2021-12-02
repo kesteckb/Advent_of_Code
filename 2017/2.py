@@ -55,6 +55,3 @@ assert part_2(test_data2) == 9
 # Answer
 print("Part 1: " + str(part_1(data)))
 print("Part 2: " + str(part_2(data)))
-
-# Close the file
-file.close()

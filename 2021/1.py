@@ -37,6 +37,3 @@ assert part_1([199, 200, 208, 210, 200, 207, 240, 269, 260, 263]) == 7
 # --- Answer ---
 print(f"Part 1: {part_1(data)}")
 print(f"Part 2: {part_2(data)}")
-
-# Close file
-file.close()
