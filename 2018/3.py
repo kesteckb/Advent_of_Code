@@ -92,18 +92,12 @@ def part_2(data) -> int:
 
     # Get occurance of coordinates (most - least) and set target equal to a
     # coordinate which occurs only once
-    histogram = dict(Counter(all_coordinates).most_common(len(all_coordinates)))
-    key_list = list(histogram.keys())
-    val_list = list(histogram.values())
-
-    # Lists only contain unique coordinates (keys)
-    while val_list[0] > 1:
-        del key_list[0]
-        del val_list[0]
+    hist = dict(Counter(all_coordinates))
+    histogram = {key: hist[key] for key in hist if hist[key] == 1}
 
     # Here we go!!!
     for claim in claims:
-        if claim.all_good(key_list):
+        if claim.all_good(histogram.keys()):
             return claim.get_id()
         
 def parse_input(data) -> list:
